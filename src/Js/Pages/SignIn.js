@@ -2,10 +2,13 @@ import Navbar from "../Components/Navbar"
 import Footer from "../Components/Footer"
 import {useNavigate} from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux"
-import { addEmail, addPassword, setSubmit, userLogin} from "../../Store/reducer"
+import { addEmail, addPassword, setSubmit } from "../../Store/userSlice"
+import { userLogin } from "../../Store/action"
+import { useEffect } from "react";
 
 export const SignIn = () => {
-    const {isFetching, isSuccess} = useSelector((state) => state.user)
+    const {isFetching, token} = useSelector((state) => state.user)
+    const {isLogged} = useSelector((state) => state.userLogged)
     const {email,password} = useSelector((state => state.user))
     const currentState  = useSelector((state) => state.user)
 
@@ -19,25 +22,27 @@ export const SignIn = () => {
 
     const handlePasswordInputChange = (e) => {
         e.persist();
-        let result = dispatch(addPassword(e.target.value))
-         return result
+        dispatch(addPassword(e.target.value))
     }
 
     const onSubmit = ({email, password}) => {
         dispatch(userLogin({email, password}))
-    }
+    }   
 
     const handleSubmit = (e) => {
         e.preventDefault()
         if (currentState.email && currentState.password){
-            dispatch(setSubmit(true))
             onSubmit({ email, password})
-            console.log(currentState)
-        } else if (currentState.email == "" && currentState.password == ""){
+            dispatch(setSubmit(true))
+        } else if (currentState.email === "" && currentState.password === ""){
             console.log("l'adresse Email ou le mot de passe n'est pas valid ou est manquant")
-        }
-        
+        }   
     }
+    console.log(currentState)
+
+    useEffect(() =>{
+        if (token) return navigate("/profil")
+    })
 
     return (
         <div>
@@ -76,8 +81,7 @@ export const SignIn = () => {
                     <button type="submit" className="sign-in-button">
                     Sign In
                     {isFetching ? <p>Loading ... </p> : null}
-                    </button>
-                    {isSuccess ? navigate('/profil', {replace:true}) : null}
+                    </button>  
                     </form>
                 </section> 
                 </main>

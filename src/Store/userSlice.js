@@ -1,39 +1,18 @@
-import { createAsyncThunk, createSlice} from "@reduxjs/toolkit"
-import axios from "axios" 
-
-const baseUrl = "http://localhost:3001/api/v1/user/login"
-export const userLogin =  createAsyncThunk (
-    'user/login',
-    async ({email, password }, token) => {
-        console.log(email, password)
-        try{
-           await axios.post(baseUrl, {
-                email: email,
-                password: password
-              })
-              .then(function (response) {
-                console.log(response);
-                 localStorage.setItem("token", response.data.token)
-                return response.data
-              })
-        } catch (e){
-            console.log("Error", e.response.data)
-        }
-    }
-) 
+import {createSlice} from "@reduxjs/toolkit"
+import { userLogin } from "./action"
 
 const userSlice = createSlice({
     name:"user",
     initialState: {
         email:"",
         password:"",
-        token: null,
         isSubmit:false,
 
         loading:false,
         isError: false,
         isSuccess:false,
         isFetching: false,
+        token:"",
         errorMsg: ""
     },
     reducers: {
@@ -50,14 +29,18 @@ const userSlice = createSlice({
             // {type: "user/setSubmit", payload: "boolean"}
             state.isSubmit = action.payload
         },
+        setToken: (state, action) => {
+            state.token = action.payload  
+        },
+        setSuccess: (state, action) => {
+            state.isSuccess = action.payload
+        },
         clearState:(state) => {
             state.isError =  false;
             state.isSuccess = false;
             state.isFetching = false;
+            state.token = ""
             return state;
-        },
-        getToken: (state, action) =>  {
-            state.token = action.payload
         }
     },
     extraReducers: {
@@ -67,27 +50,22 @@ const userSlice = createSlice({
         [userLogin.fulfilled]: (state, action ) => {
             state.email = action.payload
             state.password = action.payload
-            
+            state.isSuccess = action.payload
             state.isFetching = false
-            state.isSuccess = true;
-            return state
+            state.token = sessionStorage.getItem("user")
         },
         [userLogin.rejected]: (state, action) => {
-            console.log(action)
-            console.log(action.payload)
-            let payloadd = action.payload
             state.isFetching = false
             state.isError = true;
-            state.errorMsg = payloadd.message
+            state.errorMsg = action.payload.message
         }
 
     }
     
 })
 
-
 /* Exporting the actions from the userSlice.actions object. */
+export const {addEmail, addPassword , setSubmit, setSuccess, clearState, setToken} = userSlice.actions;
 
-export const {addEmail, addPassword , setSubmit, clearState} = userSlice.actions;
 
 export default userSlice
