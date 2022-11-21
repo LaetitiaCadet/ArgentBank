@@ -18,7 +18,7 @@ root.render(
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/SignIn" element={<SignIn />} />
-        <Route path="Profil" element={<ProfilUser/>} />
+        <Route path="/Profil" element={<ProfilUser/>} />
         <Route path="/404" element={<Navigate to={<NotFound/>}/>} />
         <Route path="*" element={<NotFound/>} />
       </Routes>

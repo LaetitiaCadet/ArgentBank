@@ -1,12 +1,14 @@
 import { useSelector, useDispatch } from "react-redux"
 import { setFirstName, setLastName, setSubmitInfos } from "../../Store/profilSlice"
 import { useState } from "react";
+import { useNavigate} from "react-router-dom";
 import { updateUserInfos } from "../../Store/action";
 
 export const HeaderProfil = () => {
     const [modalTriggered, setModalTriggered] = useState(false);
-    const {lastName, firstName} = useSelector((state) => state.userLogged)
+    const {lastName, firstName, modifyInfos} = useSelector((state) => state.userLogged)
     const {token} = useSelector((state) => state.user)
+    const navigate = useNavigate()
     const dispatch = useDispatch()
 
     const handleModalTrigger = () => setModalTriggered(!modalTriggered); 
@@ -23,67 +25,61 @@ export const HeaderProfil = () => {
 
     const onSubmit = ({firstName, lastName, token}) => {
         dispatch(updateUserInfos({firstName, lastName, token}))
-        console.log({firstName, lastName, token})
-    } 
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log('clic')
         if (firstName && lastName){
             onSubmit({firstName, lastName,token})
-            console.log({firstName, lastName})
+            console.log(firstName, lastName)
             dispatch(setSubmitInfos(true))
         } else if (currentState.firstName === "" && currentState.lastName === ""){
              alert('Vous devez remplir tout les champs requis !')
-        }   
+        }  
     }
 
+    useState(()=> {
+        console.log(modifyInfos)
+        if (!modifyInfos){
+            navigate('/Profil', {replace: true})
+            console.log(modifyInfos)
+        }
+    },[modifyInfos])
     const currentState  = useSelector((state) => state)
-    console.log(currentState)
 
     return (
-        <div className="header">
+        <div className="header mt-3">
             <h1>Welcome back<br/>{firstName + " " + lastName} </h1>
-            <button onClick={handleModalTrigger} type="button" className="btn btn-primary" aria-expanded={!modalTriggered ? true : false}>
+            <button onClick={handleModalTrigger} type="button" className="edit-button" aria-expanded={!modalTriggered ? true : false}>
                 Edit name
             </button>
-            <div className="modal" style={{ display: modalTriggered ? 'block' : 'none' }}>
-                <div className="modal-dialog modal-dialog-centered" role="document">
-                    <div className="modal-content">
-                    <div className="modal-header">
-                        <h5 className="modal-title" id="exampleModalLongTitle">Edit name</h5>
-                        <button onClick={handleModalTrigger} type="button" className="close" aria-expanded={!modalTriggered ? true : false}>
-                        <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <form onSubmit={handleSubmit} method="POST">
-                        <div className="modal-body">
-                            <div className="input-wrapper">
-                                <label htmlFor="firstName">FirstName</label>
-                                <input 
-                                    type="text"
-                                    id="firstName"
-                                    placeholder="firstName"
-                                    onChange={handleFirstNameInputChange}
-                                    />
-                            </div>
-                            <div className="input-wrapper">
-                                <label htmlFor="lastName">lastName</label>
-                                <input 
+            <div className="update-info mx-auto container mt-4 " style={{ display: modalTriggered ? 'block' : 'none' }}>
+                <form onSubmit={handleSubmit} method="POST">
+                    <div className="d-flex justify-content-center">
+                        <div className="input-wrapper mx-3">
+                            <label htmlFor="firstName">Firstname</label>
+                            <input 
+                                type="text"
+                                id="firstName"
+                                placeholder="Your name ..."
+                                onChange={handleFirstNameInputChange}
+                            />
+                        </div>
+                        <div className="input-wrapper mx-4">
+                            <label htmlFor="lastName">Lastname</label>
+                            <input 
                                 type="lastName"
                                 id="lastName"
-                                placeholder="lastName"
+                                placeholder="your last name"
                                 onChange={handleLastNameInputChange}
-                                />
-                            </div>
+                            />
                         </div>
-                        <div className="modal-footer">
-                            <button onClick={handleModalTrigger} type="button" className="btn btn-secondary"aria-expanded={!modalTriggered ? true : false}>Close</button>
-                            <button type="submit" className="btn btn-primary">Save changes</button>
-                        </div>
-                    </form>
-                    </div>
-                </div>
+                    </div> 
+                    <div className="info-footer">
+                        <button onClick={handleModalTrigger} type="submit" className="edit-button" aria-expanded={!modalTriggered ? true : false} >Save</button>
+                        <button onClick={handleModalTrigger}  className="edit-button" aria-expanded={!modalTriggered ? true : false}>Cancel</button>
+                    </div>   
+                </form>
             </div>
         </div>
     )

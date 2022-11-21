@@ -24,10 +24,11 @@ const Navbar = () => {
         dispatch(setToken(''))
         navigate('/', {replace:true})
     }
-    
+
     useEffect(()=> {
         if (token) dispatch(setLogged(true))
     })
+    
     return (
         <div>
             <ul className="nav d-flex justify-content-between align-items-center">
@@ -36,8 +37,8 @@ const Navbar = () => {
                 </li>
                 {isLogged ? 
                 <li className="nav-item d-flex align-items-center">
-                    <p className='mb-0 me-4'>{firstName}</p>
-                    <Link onClick={LogOut} className="nav-link"><span className='user-icon'></span>Sign Out</Link>
+                    <Link className='nav-link mb-0 me-4' to={'/profil'}><i className="fa-solid fa-user me-2"></i> {firstName}</Link>
+                    <Link onClick={LogOut} className="nav-link"><i className="fa-sharp fa-solid fa-arrow-right-from-bracket me-2"></i>Sign Out</Link>
                 </li>
                  :
                  <li className="nav-item">

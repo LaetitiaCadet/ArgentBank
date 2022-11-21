@@ -8,7 +8,6 @@ import { useEffect } from "react";
 
 export const SignIn = () => {
     const {isFetching, token} = useSelector((state) => state.user)
-    const {isLogged} = useSelector((state) => state.userLogged)
     const {email,password} = useSelector((state => state.user))
     const currentState  = useSelector((state) => state.user)
 
@@ -35,23 +34,22 @@ export const SignIn = () => {
             onSubmit({ email, password})
             dispatch(setSubmit(true))
         } else if (currentState.email === "" && currentState.password === ""){
-            console.log("l'adresse Email ou le mot de passe n'est pas valid ou est manquant")
-        }   
+            alert("l'adresse Email ou le mot de passe n'est pas valid ou est manquant")
+        }  
     }
-    console.log(currentState)
 
     useEffect(() =>{
         if (token) return navigate("/profil")
     })
 
     return (
-        <div>
+        <div className="bgd-dark">
             <header className="App-header">
                 <Navbar></Navbar>
             </header>
-            <main className="main bgd-dark">
+            <main className="main">
                 <section className="sign-in-content">
-                    <i className="fa fa-user-circle sign-in-icon"></i>
+                    <i className="fa fa-user-circle fa-xl sign-in-icon"></i>
                     <h1>Sign In</h1>
                     <form  onSubmit={handleSubmit} method="POST">               
                         <div className="input-wrapper">
