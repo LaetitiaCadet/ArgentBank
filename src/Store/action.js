@@ -60,7 +60,6 @@ export const userInfos = createAsyncThunk (
 export const updateUserInfos = createAsyncThunk (
   'user/infos',
   async ({firstName, lastName, token}, thunkAPI) => {
-      console.log(firstName, lastName, token)
       try{
          await axios.put(baseUrl + '/profile',
          { 
@@ -73,7 +72,6 @@ export const updateUserInfos = createAsyncThunk (
          })
           .then((response) => {
             if (response.status === 200) {
-              console.log(response.data)
               return response.data
             } else if (response.status === 401){
               console.log(response.data)

@@ -31,7 +31,6 @@ export const HeaderProfil = () => {
         e.preventDefault()
         if (firstName && lastName){
             onSubmit({firstName, lastName,token})
-            console.log(firstName, lastName)
             dispatch(setSubmitInfos(true))
         } else if (currentState.firstName === "" && currentState.lastName === ""){
              alert('Vous devez remplir tout les champs requis !')
