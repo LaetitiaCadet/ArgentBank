@@ -55,6 +55,7 @@ const userSlice = createSlice({
             state.token = sessionStorage.getItem("user")
         },
         [userLogin.rejected]: (state, action) => {
+            state.isSubmit = false
             state.isFetching = false
             state.isError = true;
             state.errorMsg = action.payload.message

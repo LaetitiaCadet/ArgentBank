@@ -1,7 +1,7 @@
 import {createAsyncThunk} from "@reduxjs/toolkit"
 import {useDispatch} from "react-redux"
 import axios from "axios"
-import { setFirstName, setLastName } from "./profilSlice"
+import { setFirstName, setLastName} from "./profilSlice"
 
 
 const baseUrl = "http://localhost:3001/api/v1/user"
@@ -17,9 +17,10 @@ export const userLogin = createAsyncThunk (
               .then((response) => {
                 if (response.status === 200){
                   sessionStorage.setItem("user", response.data.body.token)
+                  console.log(response.data)
                   return response.data
                 } else if (response.status === 400) {
-                  console.log(response.message)
+                  alert(response.message)
                 }
               })
         } catch (error){
@@ -44,6 +45,7 @@ export const userInfos = createAsyncThunk (
           }
             })
             .then((response) => {
+              console.log(response.data)
               const responseBody = response.data.body
               dispatch(setFirstName(responseBody.firstName))
               dispatch(setLastName(responseBody.lastName))
@@ -72,10 +74,11 @@ export const updateUserInfos = createAsyncThunk (
          })
           .then((response) => {
             if (response.status === 200) {
+              console.log(response.data)
               return response.data
             } else if (response.status === 401){
               console.log(response.data)
-              console.log("Error Unauthorized", response.message)
+              alert("Error Unauthorized", response.message)
             }
 
           })

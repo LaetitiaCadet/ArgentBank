@@ -4,7 +4,7 @@ import Logo from '../../Assets/argentBankLogo.png'
 
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from 'react-router-dom';
-import { clearState, setToken, setSubmit} from "../../Store/userSlice"
+import { clearState, setSubmit} from "../../Store/userSlice"
 import { setLogged} from  "../../Store/profilSlice"
 import { useEffect } from "react";
 
@@ -13,21 +13,32 @@ const Navbar = () => {
     const {token} = useSelector((state) => state.user)
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
+    useEffect(()=> {
+        const userToken = sessionStorage.getItem('user')
+        console.log(firstName)
+        console.log(token)
+        if (userToken === token){
+            dispatch(setLogged(true))
+        } else {
+            dispatch(setLogged(false))
+        }
+    },)
+
+    console.log(isLogged)
     
     const LogOut = (e) => {
+        console.log('disconnected')
         e.preventDefault()
-        sessionStorage.removeItem("user")
-        sessionStorage.clear()
         dispatch(setLogged(false))
         dispatch(clearState(true))
         dispatch(setSubmit(false))
-        dispatch(setToken(''))
+        sessionStorage.removeItem('user')
+        sessionStorage.clear()
         navigate('/', {replace:true})
     }
 
-    useEffect(()=> {
-        if (token) dispatch(setLogged(true))
-    })
+
     
     return (
         <div>

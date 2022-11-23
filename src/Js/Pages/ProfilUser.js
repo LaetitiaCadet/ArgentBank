@@ -1,21 +1,8 @@
 import Navbar from "../Components/Navbar"
 import Footer from "../Components/Footer"
-import { HeaderProfil } from "../Components/HeaderProfil"
-import { userInfos } from "../../Store/action"
-import { useEffect } from "react"
-import { useNavigate } from "react-router-dom"
-import { useDispatch, useSelector } from "react-redux"
-
+import {HeaderProfil} from "../Components/HeaderProfil"
 export const ProfilUser = () => {
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
-    const {token} = useSelector((state) => state.user)
-    dispatch(userInfos({token}))
-    useEffect(() => {
-         if (token === ""){
-            navigate('/SignIn')
-        }
-    },[token, navigate])
+
     return (
         <div>
             <div className="App-header bgd-dark ">

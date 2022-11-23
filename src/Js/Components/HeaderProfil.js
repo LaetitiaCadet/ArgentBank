@@ -1,14 +1,15 @@
 import { useSelector, useDispatch } from "react-redux"
 import { setFirstName, setLastName, setSubmitInfos } from "../../Store/profilSlice"
 import { useState } from "react";
-import { useNavigate} from "react-router-dom";
 import { updateUserInfos } from "../../Store/action";
 
 export const HeaderProfil = () => {
     const [modalTriggered, setModalTriggered] = useState(false);
-    const {lastName, firstName, modifyInfos} = useSelector((state) => state.userLogged)
+    const {lastName, firstName} = useSelector((state) => state.userLogged)
     const {token} = useSelector((state) => state.user)
-    const navigate = useNavigate()
+    const currentState  = useSelector((state) => state)
+    console.log(currentState)
+
     const dispatch = useDispatch()
 
     const handleModalTrigger = () => setModalTriggered(!modalTriggered); 
@@ -37,14 +38,14 @@ export const HeaderProfil = () => {
         }  
     }
 
-    useState(()=> {
-        console.log(modifyInfos)
-        if (!modifyInfos){
-            navigate('/Profil', {replace: true})
-            console.log(modifyInfos)
-        }
-    },[modifyInfos])
-    const currentState  = useSelector((state) => state)
+    // useState(()=> {
+    //     console.log(modifyInfos)
+    //     if (!modifyInfos){
+    //         navigate('/Profil', {replace: true})
+    //         console.log(modifyInfos)
+    //     }
+    // },[modifyInfos])
+
 
     return (
         <div className="header mt-3">
