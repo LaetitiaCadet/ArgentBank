@@ -6,29 +6,13 @@ import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from 'react-router-dom';
 import { clearState, setSubmit} from "../../Store/userSlice"
 import { setLogged} from  "../../Store/profilSlice"
-import { useEffect } from "react";
 
 const Navbar = () => {
     const {isLogged, firstName} = useSelector((state) => state.userLogged)
-    const {token} = useSelector((state) => state.user)
     const dispatch = useDispatch()
     const navigate = useNavigate()
-
-    useEffect(()=> {
-        const userToken = sessionStorage.getItem('user')
-        console.log(firstName)
-        console.log(token)
-        if (userToken === token){
-            dispatch(setLogged(true))
-        } else {
-            dispatch(setLogged(false))
-        }
-    },)
-
-    console.log(isLogged)
     
     const LogOut = (e) => {
-        console.log('disconnected')
         e.preventDefault()
         dispatch(setLogged(false))
         dispatch(clearState(true))
@@ -38,8 +22,6 @@ const Navbar = () => {
         navigate('/', {replace:true})
     }
 
-
-    
     return (
         <div>
             <ul className="nav d-flex justify-content-between align-items-center">

@@ -8,8 +8,6 @@ export const HeaderProfil = () => {
     const {lastName, firstName} = useSelector((state) => state.userLogged)
     const {token} = useSelector((state) => state.user)
     const currentState  = useSelector((state) => state)
-    console.log(currentState)
-
     const dispatch = useDispatch()
 
     const handleModalTrigger = () => setModalTriggered(!modalTriggered); 
@@ -33,6 +31,7 @@ export const HeaderProfil = () => {
         if (firstName && lastName){
             onSubmit({firstName, lastName,token})
             dispatch(setSubmitInfos(true))
+            window.location.reload()
         } else if (currentState.firstName === "" && currentState.lastName === ""){
              alert('Vous devez remplir tout les champs requis !')
         }  

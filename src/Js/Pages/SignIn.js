@@ -8,20 +8,16 @@ import { useEffect } from "react";
 
 export const SignIn = () => {
     const {isFetching} = useSelector((state) => state.user)
-    const {email,password,token} = useSelector((state => state.user))
+    const {email,password} = useSelector((state => state.user))
     const currentState = useSelector((state) => state.user)
-    console.log(currentState)
-
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    useEffect( () => {
+    useEffect(() => {
          const userToken = sessionStorage.getItem('user')
-         if (userToken === token){
-            console.log(userToken)
+         if (userToken !== null){
             navigate('/Profil', {replace: true})
-         }
-
+         }  
     })
 
     const handleEmailInputChange = (e) => {
@@ -33,7 +29,6 @@ export const SignIn = () => {
         e.persist();
         dispatch(addPassword(e.target.value))
     }
-
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -82,7 +77,7 @@ export const SignIn = () => {
                         {/* <!-- SHOULD BE THE BUTTON BELOW --> */}
                         <button type="submit" className="sign-in-button">
                         Sign In
-                        {isFetching ? <p>Loading ... </p> : null}
+                        {isFetching ? <p>Loading ... </p> : null }
                         </button>  
                         </form>
                     </section> 

@@ -1,14 +1,15 @@
 import {createAsyncThunk} from "@reduxjs/toolkit"
-import {useDispatch} from "react-redux"
 import axios from "axios"
 import { setFirstName, setLastName} from "./profilSlice"
+import {  setSubmit } from "./userSlice"
 
 
 const baseUrl = "http://localhost:3001/api/v1/user"
 
 export const userLogin = createAsyncThunk (
     'user/login',
-    async ({email, password }) => {
+    async ({email, password }, thunkAPI) => {
+      const {rejectWithValue, dispatch} = thunkAPI
         try{
            await axios.post(baseUrl + '/login', {
                 email: email, 
@@ -17,10 +18,8 @@ export const userLogin = createAsyncThunk (
               .then((response) => {
                 if (response.status === 200){
                   sessionStorage.setItem("user", response.data.body.token)
-                  console.log(response.data)
+                  alert(response.data.message)
                   return response.data
-                } else if (response.status === 400) {
-                  alert(response.message)
                 }
               })
         } catch (error){
@@ -28,6 +27,10 @@ export const userLogin = createAsyncThunk (
             console.log(error.response.data);
             console.log(error.response.status);
             console.log(error.response.headers);
+            dispatch(setSubmit(false))
+            alert(error.response.data.message)
+            rejectWithValue(error.response.data.message)
+            window.location.reload()
           }
         }
     }
@@ -36,8 +39,8 @@ export const userLogin = createAsyncThunk (
 
 export const userInfos = createAsyncThunk (
   'user/infos',
-  async ({token}) => {
-      const dispatch = useDispatch()
+  async ({token}, thunkAPI) => {
+      const {dispatch} = thunkAPI
       try{
          await axios.post(baseUrl + '/profile', {}, {
           headers: {
@@ -45,14 +48,17 @@ export const userInfos = createAsyncThunk (
           }
             })
             .then((response) => {
-              console.log(response.data)
               const responseBody = response.data.body
               dispatch(setFirstName(responseBody.firstName))
               dispatch(setLastName(responseBody.lastName))
+              alert(response.data.message)
               return response.data
             })
-      } catch (e){
-          console.log("Error", e.response.data)
+      } catch (error){
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+          console.log("Error", error.response.data)
       }
   }
 
@@ -74,7 +80,6 @@ export const updateUserInfos = createAsyncThunk (
          })
           .then((response) => {
             if (response.status === 200) {
-              console.log(response.data)
               return response.data
             } else if (response.status === 401){
               console.log(response.data)
@@ -88,5 +93,3 @@ export const updateUserInfos = createAsyncThunk (
   }
 
 )
-
-

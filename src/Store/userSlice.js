@@ -13,7 +13,7 @@ const userSlice = createSlice({
         isSuccess:false,
         isFetching: false,
         token:"",
-        errorMsg: ""
+        errorMsg:""
     },
     reducers: {
         //login
@@ -34,6 +34,9 @@ const userSlice = createSlice({
         },
         setSuccess: (state, action) => {
             state.isSuccess = action.payload
+        },
+        setErrorMsg: (state, action) => {
+            state.errorMsg = action.payload
         },
         clearState:(state) => {
             state.isError =  false;
@@ -66,7 +69,7 @@ const userSlice = createSlice({
 })
 
 /* Exporting the actions from the userSlice.actions object. */
-export const {addEmail, addPassword , setSubmit, setSuccess, clearState, setToken} = userSlice.actions;
+export const {addEmail, addPassword , setSubmit, setSuccess, clearState, setToken, setErrorMsg} = userSlice.actions;
 
 
 export default userSlice

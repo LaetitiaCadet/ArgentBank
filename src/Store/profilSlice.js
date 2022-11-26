@@ -1,7 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit"
 
-
-
 const profilSlice = createSlice({
     name:"profil",
     initialState: {
@@ -26,9 +24,6 @@ const profilSlice = createSlice({
         setLogged:(state, action) =>{
             state.isLogged = action.payload
         },
-        currentUser:(state,action) => {
-
-        }
         
     },
 
