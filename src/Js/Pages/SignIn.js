@@ -7,8 +7,8 @@ import { userLogin } from "../../Store/action"
 import { useEffect } from "react";
 
 export const SignIn = () => {
-    const {isFetching} = useSelector((state) => state.user)
-    const {email,password} = useSelector((state => state.user))
+    const {isFetching, errorMsg, serverMsg} = useSelector((state) => state.user)
+    const {email,password } = useSelector((state => state.user))
     const currentState = useSelector((state) => state.user)
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -50,7 +50,11 @@ export const SignIn = () => {
                     <section className="sign-in-content">
                         <i className="fa fa-user-circle fa-xl sign-in-icon"></i>
                         <h1>Sign In</h1>
-                        <form  onSubmit={handleSubmit} method="POST">               
+                        <form  onSubmit={handleSubmit} method="POST">  
+                           {errorMsg ?
+                            <p className="error-msg">{serverMsg}</p> 
+                            : null
+                            }     
                             <div className="input-wrapper">
                                 <label htmlFor="email">Email</label>
                                 <input 

@@ -1,7 +1,7 @@
 import {createAsyncThunk} from "@reduxjs/toolkit"
 import axios from "axios"
 import { setFirstName, setLastName} from "./profilSlice"
-import {  setSubmit } from "./userSlice"
+import { setServerMsg} from "./userSlice"
 
 
 const baseUrl = "http://localhost:3001/api/v1/user"
@@ -18,7 +18,7 @@ export const userLogin = createAsyncThunk (
               .then((response) => {
                 if (response.status === 200){
                   sessionStorage.setItem("user", response.data.body.token)
-                  alert(response.data.message)
+                  dispatch(setServerMsg(response.data.message)) 
                   return response.data
                 }
               })
@@ -27,10 +27,8 @@ export const userLogin = createAsyncThunk (
             console.log(error.response.data);
             console.log(error.response.status);
             console.log(error.response.headers);
-            dispatch(setSubmit(false))
-            alert(error.response.data.message)
-            rejectWithValue(error.response.data.message)
-            window.location.reload()
+            dispatch(setServerMsg(error.response.data.message)) 
+            return rejectWithValue(error.response.data.message)
           }
         }
     }
@@ -40,7 +38,7 @@ export const userLogin = createAsyncThunk (
 export const userInfos = createAsyncThunk (
   'user/infos',
   async ({token}, thunkAPI) => {
-      const {dispatch} = thunkAPI
+      const {dispatch, rejectWithValue} = thunkAPI
       try{
          await axios.post(baseUrl + '/profile', {}, {
           headers: {
@@ -51,7 +49,6 @@ export const userInfos = createAsyncThunk (
               const responseBody = response.data.body
               dispatch(setFirstName(responseBody.firstName))
               dispatch(setLastName(responseBody.lastName))
-              alert(response.data.message)
               return response.data
             })
       } catch (error){
@@ -59,6 +56,7 @@ export const userInfos = createAsyncThunk (
           console.log(error.response.status);
           console.log(error.response.headers);
           console.log("Error", error.response.data)
+          return rejectWithValue(error.response.data.message)
       }
   }
 
@@ -68,6 +66,7 @@ export const userInfos = createAsyncThunk (
 export const updateUserInfos = createAsyncThunk (
   'user/infos',
   async ({firstName, lastName, token}, thunkAPI) => {
+      const {rejectWithValue} = thunkAPI
       try{
          await axios.put(baseUrl + '/profile',
          { 
@@ -79,16 +78,12 @@ export const updateUserInfos = createAsyncThunk (
           }
          })
           .then((response) => {
-            if (response.status === 200) {
               return response.data
-            } else if (response.status === 401){
-              console.log(response.data)
-              alert("Error Unauthorized", response.message)
-            }
-
           })
-      } catch (e){
-          console.log("Error", e.response.data)
+      } catch (error){
+          console.log("Error", error.response.data)
+          console.log("Error Unauthorized", error.response.data.message)
+          return rejectWithValue(error.response.data.message)
       }
   }
 

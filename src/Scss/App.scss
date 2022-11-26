@@ -175,7 +175,7 @@ body {
 	font-weight: bold;
 	padding: 10px;
 	width: 200px;
-	margin: vb n 15px
+	margin: 15px
 
 }
 .header {
@@ -193,6 +193,14 @@ body {
 	background-color: $background-color_2;
 	color: $color_4;
 }
+
+.error-msg{
+	background-color: red;
+	color:white;
+	font-weight: bold;
+
+}
+
 @media (min-width: 920px) {
 	.hero {
 		height: 400px;
@@ -224,5 +232,24 @@ body {
 	}
 	.transaction-button {
 		width: 200px;
+	}
+}
+
+@media(max-width:767px){ 
+	.nav{
+		justify-content: center !important;
+	}
+	#modifyName{
+		flex-direction: column;
+
+		.input-wrapper{
+			margin: 1.5rem;
+		}
+
+		.info-footer{
+			button{
+				margin-bottom : 15px;
+			}
+		}
 	}
 }

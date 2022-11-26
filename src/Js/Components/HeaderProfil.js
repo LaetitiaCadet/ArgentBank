@@ -37,14 +37,6 @@ export const HeaderProfil = () => {
         }  
     }
 
-    // useState(()=> {
-    //     console.log(modifyInfos)
-    //     if (!modifyInfos){
-    //         navigate('/Profil', {replace: true})
-    //         console.log(modifyInfos)
-    //     }
-    // },[modifyInfos])
-
 
     return (
         <div className="header mt-3">
@@ -54,8 +46,8 @@ export const HeaderProfil = () => {
             </button>
             <div className="update-info mx-auto container mt-4 " style={{ display: modalTriggered ? 'block' : 'none' }}>
                 <form onSubmit={handleSubmit} method="POST">
-                    <div className="d-flex justify-content-center">
-                        <div className="input-wrapper mx-3">
+                    <div className="d-flex justify-content-center" id="modifyName">
+                        <div className="input-wrapper mx-4">
                             <label htmlFor="firstName">Firstname</label>
                             <input 
                                 type="text"
@@ -69,7 +61,7 @@ export const HeaderProfil = () => {
                             <input 
                                 type="lastName"
                                 id="lastName"
-                                placeholder="your last name"
+                                placeholder="Your lastname ..."
                                 onChange={handleLastNameInputChange}
                             />
                         </div>
