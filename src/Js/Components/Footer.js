@@ -1,3 +1,4 @@
+import '../../Scss/Components/Footer.scss'
 
 const Footer = () => {
     return ( 

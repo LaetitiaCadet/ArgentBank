@@ -21,6 +21,12 @@ body {
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
+	
+}
+
+.App-signIn{
+	margin: auto;
+    display: flow-root;
 }
 .main {
 	flex: 1;
@@ -129,16 +135,7 @@ body {
 		font-size: 1.2rem;
 	}
 }
-.footer {
-	display: flex;
-	justify-content: center;
-	border-top: 2px solid #ccc;
-	padding: 2rem 0 1.5rem;
-}
-.footer-text {
-	margin: 0;
-	padding: 0;
-}
+
 .account {
 	display: flex;
 	justify-content: space-between;
@@ -177,6 +174,9 @@ body {
 	color: $color_4;
 	font-weight: bold;
 	padding: 10px;
+	width: 200px;
+	margin: 15px
+
 }
 .header {
 	color: $color_4;
@@ -193,6 +193,14 @@ body {
 	background-color: $background-color_2;
 	color: $color_4;
 }
+
+.error-msg{
+	background-color: red;
+	color:white;
+	font-weight: bold;
+
+}
+
 @media (min-width: 920px) {
 	.hero {
 		height: 400px;
@@ -224,5 +232,24 @@ body {
 	}
 	.transaction-button {
 		width: 200px;
+	}
+}
+
+@media(max-width:767px){ 
+	.nav{
+		justify-content: center !important;
+	}
+	#modifyName{
+		flex-direction: column;
+
+		.input-wrapper{
+			margin: 1.5rem;
+		}
+
+		.info-footer{
+			button{
+				margin-bottom : 15px;
+			}
+		}
 	}
 }
