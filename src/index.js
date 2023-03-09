@@ -19,8 +19,8 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-      <HashRouter >
-        <Routes basename="/">
+      <HashRouter basename="/" >
+        <Routes>
           <Route exact path="/" element={<HomePage />} />
           <Route path="/SignIn" element={<SignIn />} />
           <Route path="/Profil" element={<ProfilUser/>} />
