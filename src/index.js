@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { HashRouter,   Routes,
+import { BrowserRouter,   Routes,
   Route, Navigate} from "react-router-dom";
 
 import {persistor} from './store'
@@ -19,15 +19,15 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-      <HashRouter basename="/" >
+      <BrowserRouter basename='/'>
         <Routes>
-          <Route exact path="/" element={<HomePage />} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/SignIn" element={<SignIn />} />
           <Route path="/Profil" element={<ProfilUser/>} />
           <Route path="/404" element={<Navigate to={<NotFound/>}/>} />
           <Route path="*" element={<NotFound/>} />
         </Routes>
-      </HashRouter>
+      </BrowserRouter>
     </PersistGate>
   </Provider>
 
