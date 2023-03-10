@@ -21,7 +21,7 @@ root.render(
     <PersistGate loading={null} persistor={persistor}>
       <BrowserRouter basename='/'>
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route exact path="/" element={<HomePage />} />
           <Route path="/SignIn" element={<SignIn />} />
           <Route path="/Profil" element={<ProfilUser/>} />
           <Route path="/404" element={<Navigate to={<NotFound/>}/>} />
