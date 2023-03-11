@@ -17,9 +17,9 @@ import NotFound from './Js/Pages/NotFound';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+<HashRouter basename='/'>  
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-      <HashRouter basename='/'>
         <Routes>
           <Route exact path="/" element={<HomePage />} />
           <Route path="/SignIn" element={<SignIn />} />
@@ -27,8 +27,8 @@ root.render(
           <Route path="/404" element={<Navigate to={<NotFound/>}/>} />
           <Route path="*" element={<NotFound/>} />
         </Routes>
-      </HashRouter>
     </PersistGate>
   </Provider>
+</HashRouter>
 
 );
