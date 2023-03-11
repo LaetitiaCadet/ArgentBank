@@ -1,3 +1,10 @@
+# Before Starting 
+This project need to run with this repo server to login the user.
+Read the ReadMe : 
+(https://github.com/LaetitiaCadet/Project-10-Bank-API)
+
+This codebase contains the code needed to run the backend for Argent Bank.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
